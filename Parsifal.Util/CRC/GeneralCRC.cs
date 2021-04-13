@@ -27,14 +27,14 @@ namespace Parsifal.Util.CRC
         }
         #endregion
 
-        #region ICrc
+        #region private
         public override CrcArgument Argument => _crcArg;
-        protected override ulong GetCrcValue(byte[] data, int offset, int length)
+        protected override ulong CalculateCrc(byte[] data, int offset, int length, ulong initial = 0)
         {
-            var result = _initValue;
+            ulong result = initial == 0 ? _initValue : initial;
             while (length-- > 0)
             {
-                var current = data[offset++];
+                byte current = data[offset++];
                 if (_crcArg.Width < 8)
                 {
                     //对每位进行处理
@@ -69,9 +69,6 @@ namespace Parsifal.Util.CRC
             result ^= _crcArg.XorValue;
             return result;
         }
-        #endregion
-
-        #region private
         private ulong[] CreateTable(int width, ulong poly, bool refIn)
         {
             int perBitCount = width < 8 ? 1 : 8;

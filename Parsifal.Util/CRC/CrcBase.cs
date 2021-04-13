@@ -5,28 +5,52 @@ namespace Parsifal.Util.CRC
     public abstract class CrcBase : ICrc
     {
         public abstract CrcArgument Argument { get; }
-        /// <summary>
-        /// 获取CRC值
-        /// </summary>
+        /// <summary>计算CRC</summary>
         /// <remarks>无需校验参数</remarks>
-        protected abstract ulong GetCrcValue(byte[] data, int offset, int length);
+        protected abstract ulong CalculateCrc(byte[] data, int offset, int length, ulong initial = 0);
 
         #region ICrc
-#if NETSTANDARD2_0
-        public byte[] GetCrc(byte[] data)
+        public ulong GetCrcValue(byte[] data)
         {
-            return GetCrc(data, 0);
+            return GetCrcValue(data, 0);
         }
-        public byte[] GetCrc(byte[] data, int offset)
+        public ulong GetCrcValue(byte[] data, int offset)
         {
-            return GetCrc(data, offset, data.Length - offset);
+            return GetCrcValue(data, offset, data.Length - offset);
         }
-#endif
-        public byte[] GetCrc(byte[] data, int offset, int length)
+        public ulong GetCrcValue(byte[] data, int offset, int length)
         {
             CheckArgument(data, offset, length);
-            var value = GetCrcValue(data, offset, length);
+            var value = CalculateCrc(data, offset, length);
+            return value & GetMask(Argument.Width);//将高位无意义值屏蔽
+        }
+        public byte[] GetCrcBytes(byte[] data)
+        {
+            return GetCrcBytes(data, 0);
+        }
+        public byte[] GetCrcBytes(byte[] data, int offset)
+        {
+            return GetCrcBytes(data, offset, data.Length - offset);
+        }
+        public byte[] GetCrcBytes(byte[] data, int offset, int length)
+        {
+            CheckArgument(data, offset, length);
+            var value = CalculateCrc(data, offset, length);
             return GetBytes(value, Argument.Width);
+        }
+        public ulong Append(ulong initial, byte[] data)
+        {
+            return Append(initial, data, 0);
+        }
+        public ulong Append(ulong initial, byte[] data, int offset)
+        {
+            return Append(initial, data, offset, data.Length - offset);
+        }
+        public ulong Append(ulong initial, byte[] data, int offset, int length)
+        {
+            CheckArgument(data, offset, length);
+            var value = CalculateCrc(data, offset, length, initial);
+            return value & GetMask(Argument.Width);
         }
         #endregion
 
@@ -46,7 +70,7 @@ namespace Parsifal.Util.CRC
             int count = (width - 1) / 8 + 1;//结果字节数
             //var result = BitConverter.GetBytes(value);
             //return result[0..^(8 - count)];
-            value &= ((ulong.MaxValue) >> (64 - width));
+            value &= GetMask(width);
             var result = new byte[count];
             for (int i = 0; i < result.Length; i++)
             {
@@ -54,6 +78,10 @@ namespace Parsifal.Util.CRC
                 value >>= 8;
             }
             return result;
+        }
+        private static ulong GetMask(int width)
+        {
+            return ulong.MaxValue >> (64 - width);
         }
     }
 }

@@ -37,13 +37,12 @@
             0xAFB010B1, 0xAB710D06, 0xA6322BDF, 0xA2F33668, 0xBCB4666D, 0xB8757BDA, 0xB5365D03, 0xB1F740B4};
 
         public override CrcArgument Argument => CrcStandardParam.CRC_32_MPEG2;
-        protected override ulong GetCrcValue(byte[] data, int offset, int length)
+        protected override ulong CalculateCrc(byte[] data, int offset, int length, ulong initial = 0)
         {
-            uint crc = 0xFFFFFFFF;
-            int shiftRight = 32 - 8;
+            uint crc = (uint)(initial == 0 ? 0xFFFFFFFF : initial);
             while (length-- > 0)
             {
-                crc = _crcTable[((crc >> shiftRight) ^ data[offset++]) & 0xFF] ^ (crc << 8);
+                crc = _crcTable[((crc >> 24) ^ data[offset++]) & 0xFF] ^ (crc << 8);
             }
             return crc;
         }

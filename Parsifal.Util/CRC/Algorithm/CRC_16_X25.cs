@@ -37,9 +37,9 @@
             0x7BC7, 0x6A4E, 0x58D5, 0x495C, 0x3DE3, 0x2C6A, 0x1EF1, 0x0F78};
 
         public override CrcArgument Argument => CrcStandardParam.CRC_16_X25;
-        protected override ulong GetCrcValue(byte[] data, int offset, int length)
+        protected override ulong CalculateCrc(byte[] data, int offset, int length, ulong initial = 0)
         {
-            ushort crc = 0xFFFF;
+            ushort crc = (ushort)(initial == 0 ? 0xFFFF : initial);
             while (length-- > 0)
             {
                 crc = (ushort)((crc >> 8) ^ _table[(crc ^ data[offset++]) & 0xFF]);

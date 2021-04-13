@@ -11,29 +11,33 @@ namespace Parsifal.Util.Benchmark
     public class CrcBenchmarkTest
     {
         byte[] _testDataBytes;
-        ICrc _crcS = CrcFactory.Get(CrcAlgorithmType.CRC_16_CCITT);
-        ICrc _crcG = CrcFactory.Get(CrcStandardParam.CRC_16_CCITT);
+        ICrc _crcS;
+        ICrc _crcG;
 
-        [Params(100, 100_000)]
-        public int _length;
+        [Params(1000, 1_000_000)]
+        public int length;
+        [Params(CrcAlgorithmType.CRC_16_CCITT, CrcAlgorithmType.CRC_32)]
+        public CrcAlgorithmType type;
 
         [GlobalSetup]
         public void Setup()
         {
-            _testDataBytes = new byte[_length];
+            _crcS = CrcFactory.GetCrc(type);
+            _crcG = CrcFactory.GetCrc(_crcS.Argument);
+            _testDataBytes = new byte[length];
             new Random(Guid.NewGuid().GetHashCode()).NextBytes(_testDataBytes);
         }
 
         [Benchmark]
-        public byte[] CalcCrcWithSpecificAlgorithm()
+        public ulong CalcCrcWithSpecificAlgorithm()
         {
-            return _crcS.GetCrc(_testDataBytes);
+            return _crcS.GetCrcValue(_testDataBytes);
         }
 
         [Benchmark]
-        public byte[] CalcCrcWithGeneralAlgotithm()
+        public ulong CalcCrcWithGeneralAlgotithm()
         {
-            return _crcG.GetCrc(_testDataBytes);
+            return _crcG.GetCrcValue(_testDataBytes);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Parsifal.Util.Benchmark
     {
         static void Main(string[] args)
         {
-            //BenchmarkRunner.Run<CrcBenchmarkTest>();
+            //_ = BenchmarkRunner.Run<CrcBenchmarkTest>();
             var switcher = new BenchmarkSwitcher(new[] {
                 typeof(CrcBenchmarkTest)
             });

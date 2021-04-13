@@ -68,11 +68,11 @@
             0x66E7A46C27F3AA2Cul, 0x1C3FD4A417C62355ul, 0x935745FC4798B8DEul, 0xE98F353477AD31A7ul,
             0xA6DF411FBFB21CA3ul, 0xDC0731D78F8795DAul, 0x536FA08FDFD90E51ul, 0x29B7D047EFEC8728ul
         };
-        public override CrcArgument Argument => CrcStandardParam.CRC_64_JONES;
 
-        protected override ulong GetCrcValue(byte[] data, int offset, int length)
+        public override CrcArgument Argument => CrcStandardParam.CRC_64_JONES;
+        protected override ulong CalculateCrc(byte[] data, int offset, int length, ulong initial = 0)
         {
-            ulong crc = 0;
+            ulong crc = initial == 0 ? 0xFFFF_FFFF_FFFF_FFFF : initial;
             while (length-- > 0)
             {
                 crc = (crc >> 8) ^ _table[(byte)crc ^ data[offset++]];

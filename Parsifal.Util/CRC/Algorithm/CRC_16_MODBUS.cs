@@ -37,9 +37,9 @@
             0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040};
 
         public override CrcArgument Argument => CrcStandardParam.CRC_16_MODBUS;
-        protected override ulong GetCrcValue(byte[] data, int offset, int length)
+        protected override ulong CalculateCrc(byte[] data, int offset, int length, ulong initial = 0)
         {
-            ushort crc = 0xFFFF;
+            ushort crc = (ushort)(initial == 0 ? 0xFFFF : initial);
             while (length-- > 0)
             {
                 crc = (ushort)((crc >> 8) ^ _table[(crc ^ data[offset++]) & 0xFF]);

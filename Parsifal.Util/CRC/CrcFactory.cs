@@ -10,7 +10,7 @@ namespace Parsifal.Util.CRC
         /// </summary>
         /// <param name="type">crc类型</param>
         /// <exception cref="NotSupportedException">未实现的算法或内部错误</exception>
-        public static ICrc Get(CrcAlgorithmType type)
+        public static ICrc GetCrc(CrcAlgorithmType type)
         {//对部分有具体计算方法的算法类型直接使用其实现，其他则采用通用算法
             if (type != CrcAlgorithmType.None)
             {
@@ -37,7 +37,7 @@ namespace Parsifal.Util.CRC
         /// 获取指定参数对应的CRC算法
         /// </summary>
         /// <param name="argument">crc参数</param>
-        public static ICrc Get(CrcArgument argument)
+        public static ICrc GetCrc(CrcArgument argument)
         {
             return new GeneralCRC(argument);
         }

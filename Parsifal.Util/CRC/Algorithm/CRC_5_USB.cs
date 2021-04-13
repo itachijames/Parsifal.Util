@@ -21,14 +21,14 @@
             0x0D, 0x03, 0x11, 0x1F, 0x1C, 0x12, 0x00, 0x0E, 0x06, 0x08, 0x1A, 0x14, 0x17, 0x19, 0x0B, 0x05};
 
         public override CrcArgument Argument => CrcStandardParam.CRC_5_USB;
-        protected override ulong GetCrcValue(byte[] data, int offset, int length)
+        protected override ulong CalculateCrc(byte[] data, int offset, int length, ulong initial = 0)
         {
-            byte crc = 0x1F;
+            byte crc = (byte)(initial == 0 ? 0x1F : initial);
             while (length-- > 0)
             {
                 crc = (byte)((_table[crc ^ data[offset++]] ^ (crc >> 8)) & 0x1F);
             }
-            return (byte)(crc & 0x1F);
+            return (byte)(crc ^ 0x1F);
         }
     }
 }
