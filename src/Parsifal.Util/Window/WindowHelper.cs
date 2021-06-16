@@ -11,6 +11,30 @@ namespace Parsifal.Util.Window
     public class WindowHelper
     {
         /// <summary>
+        /// 关机
+        /// </summary>
+        public static void Shutdown()
+        {
+            var psi = new ProcessStartInfo("shutdown", "/s /t 0")
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            Process.Start(psi);
+        }
+        /// <summary>
+        /// 重启
+        /// </summary>
+        public static void Restart()
+        {
+            var psi = new ProcessStartInfo("shutdown", "/r /t 0")
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            Process.Start(psi);
+        }
+        /// <summary>
         /// 指定程序是否在运行
         /// </summary>
         /// <param name="process">进程名</param>

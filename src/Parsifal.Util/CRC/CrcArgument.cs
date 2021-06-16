@@ -71,10 +71,14 @@ namespace Parsifal.Util.CRC
             }
             expression.Append(" + 1");
             return expression.ToString();
-        }
-        private static bool IsBitOne(ulong value, int index)
-        {//二进制时指定位是否为1
-            return ((value >> index) & 1) == 1;
+
+#if !NETSTANDARD2_0
+            static
+#endif
+            bool IsBitOne(ulong value, int index)
+            {//二进制时指定位是否为1
+                return ((value >> index) & 1) == 1;
+            }
         }
     }
 }

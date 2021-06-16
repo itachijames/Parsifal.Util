@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace Parsifal.Util
@@ -12,16 +13,7 @@ namespace Parsifal.Util
         {
             if (first == null || second == null)
                 return false;
-            if (first.Length != second.Length)
-                return false;
-            for (int i = 0; i < first.Length; i++)
-            {
-                if (first[i] != second[i])
-                {
-                    return false;
-                }
-            }
-            return true;
+            return first.SequenceEqual(second);
         }
         /// <summary>
         /// 获取简要信息

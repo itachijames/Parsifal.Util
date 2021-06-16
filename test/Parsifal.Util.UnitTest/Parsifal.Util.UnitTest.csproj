@@ -3,12 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
+    <Product>Parsifal</Product>
     <Authors>itachijames</Authors>
     <Company>itachijames</Company>
-    <Product>Parsifal.Util</Product>
     <Copyright>© ITACHIJAMES. All rights reserved.</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/itachijames/Parsifal.Util</PackageProjectUrl>
     <RepositoryUrl>https://github.com/itachijames/Parsifal.Util.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -28,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Parsifal.Util\Parsifal.Util.csproj" />
+    <ProjectReference Include="..\..\src\Parsifal.Util\Parsifal.Util.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">
