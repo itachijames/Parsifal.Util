@@ -3,22 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageId>Parsifal.Util</PackageId>
-    <Version>1.2.0</Version>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
-    <PackageTags>Helper,CRC,Interop</PackageTags>
     <Description>实用功能库</Description>
-    <Product>Parsifal</Product>
-    <Authors>itachijames</Authors>
-    <Company>itachijames</Company>
-    <Copyright>© ITACHIJAMES. All rights reserved.</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/itachijames/Parsifal.Util</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/itachijames/Parsifal.Util.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
+    <PackageTags>Helper,CRC,Interop</PackageTags>
     <NoWarn>1591;1701;1702</NoWarn>
+    <Version>1.2.0</Version>
     <!--<DefineConstants Condition="'$(OS)'!=''">$(DefineConstants);$(OS)</DefineConstants>-->
   </PropertyGroup>
 

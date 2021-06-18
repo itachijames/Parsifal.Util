@@ -3,13 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <Product>Parsifal</Product>
-    <Authors>itachijames</Authors>
-    <Company>itachijames</Company>
-    <Copyright>© ITACHIJAMES. All rights reserved.</Copyright>
-    <PackageProjectUrl>https://github.com/itachijames/Parsifal.Util</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/itachijames/Parsifal.Util.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

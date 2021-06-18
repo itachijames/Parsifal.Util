@@ -1,0 +1,15 @@
+<Project>
+	<PropertyGroup>
+		<Product>Parsifal.Util</Product>
+		<Authors>itachijames</Authors>
+		<Company>itachijames</Company>
+		<Copyright>© ITACHIJAMES. All Rights Reserved.</Copyright>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/itachijames/Parsifal.Util</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/itachijames/Parsifal.Util.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+	</PropertyGroup>
+</Project>
