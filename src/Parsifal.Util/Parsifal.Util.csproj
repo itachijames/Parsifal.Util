@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0</TargetFrameworks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Description>实用功能库</Description>
-    <PackageTags>Helper,CRC,Interop</PackageTags>
-    <NoWarn>1591;1701;1702</NoWarn>
     <Version>1.2.0</Version>
+    <PackageId>$(AssemblyName)</PackageId>
+    <PackageTags>Helper,CRC,Interop</PackageTags>
+    <Description>实用功能库</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
     <!--<DefineConstants Condition="'$(OS)'!=''">$(DefineConstants);$(OS)</DefineConstants>-->
   </PropertyGroup>
 
