@@ -24,7 +24,11 @@ namespace Parsifal.Util
             try
             {
                 Marshal.Copy(datas, 0, structPtr, size);
+#if NETFRAMEWORK
+                return (T)Marshal.PtrToStructure(structPtr, typeof(T));
+#else
                 return Marshal.PtrToStructure<T>(structPtr);
+#endif
             }
             finally
             {
@@ -50,7 +54,11 @@ namespace Parsifal.Util
                 {
                     tempPtr = new IntPtr(p.ToInt64()) + size * i;
                     //tempPtr = new IntPtr(p.ToInt64() + size * i);
+#if NETFRAMEWORK
+                    result[i] = (T)Marshal.PtrToStructure(tempPtr, typeof(T));
+#else
                     result[i] = Marshal.PtrToStructure<T>(tempPtr);
+#endif
                 }
             }
             catch (Exception)

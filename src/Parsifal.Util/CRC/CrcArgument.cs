@@ -72,7 +72,7 @@ namespace Parsifal.Util.CRC
             expression.Append(" + 1");
             return expression.ToString();
 
-#if !NETSTANDARD2_0
+#if !NETFRAMEWORK
             static
 #endif
             bool IsBitOne(ulong value, int index)

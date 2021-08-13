@@ -97,7 +97,7 @@ namespace Parsifal.Util.Window
             }
             return false;
 
-#if !NETSTANDARD2_0
+#if !NETFRAMEWORK
             static
 #endif
             bool SearthWindowsCallback(IntPtr win, ref AppModuleInfo module)
