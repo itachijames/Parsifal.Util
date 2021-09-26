@@ -49,8 +49,8 @@ namespace Parsifal.Util.CRC
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/>为负</exception>
         public CrcArgument(int width, ulong polynomial, ulong initial, bool isInputReflected, bool isOutputReflected, ulong outputXor)
         {
-            if (width < 1)
-                throw new ArgumentOutOfRangeException(nameof(width));
+            if (width <= 0 || width > 64)
+                throw new ArgumentOutOfRangeException(nameof(width), width, "Only support under 64 bit!");
             Width = width;
             Polynomial = polynomial;
             InitValue = initial;

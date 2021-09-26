@@ -18,8 +18,6 @@ namespace Parsifal.Util.CRC
         public GeneralCRC(CrcArgument argument)
         {
             _crcArg = argument ?? throw new ArgumentNullException(nameof(argument));
-            if (_crcArg.Width > 64)
-                throw new ArgumentOutOfRangeException($"{nameof(argument)}.{nameof(argument.Width)}", argument.Width, "Only support under 64 bit!");
             //查表法
             _crcTable = CreateTable(_crcArg.Width, _crcArg.Polynomial, _crcArg.ReflectIn);
             _rightShift = _crcArg.Width - (_crcArg.Width < 8 ? 1 : 8);

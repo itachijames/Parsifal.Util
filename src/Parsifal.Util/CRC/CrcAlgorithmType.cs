@@ -215,7 +215,7 @@
         /// </summary>
         CRC_16_CCITT,
         /// <summary>
-        /// CRC-16/CCITT-FALSE ir CRC-16/AUTOSAR or CRC-16/IBM-3740
+        /// CRC-16/CCITT-FALSE or CRC-16/AUTOSAR or CRC-16/IBM-3740
         /// </summary>
         CRC_16_CCITT_FALSE,
         /// <summary>
