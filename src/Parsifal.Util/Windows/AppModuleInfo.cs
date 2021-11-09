@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Parsifal.Util.Window
+namespace Parsifal.Util.Windows
 {
     public class AppModuleInfo
     {

@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace Parsifal.Util.UnitTest
 {
@@ -8,7 +9,8 @@ namespace Parsifal.Util.UnitTest
         public void NetTest()
         {
             var localIPs = NetHelper.GetLocalIPv4();
-            Assert.True(localIPs.Length >= 1);
+
+            var ips = NetHelper.GetLocalIPs().ToList();
         }
     }
 }

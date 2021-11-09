@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -13,26 +14,87 @@ namespace Parsifal.Util.Net
         private readonly TcpListener _server;
         private readonly ConcurrentDictionary<EndPoint, TcpClient> _connClients;
 
+        /// <summary>
+        /// 缓存大小
+        /// </summary>
         public int BufferSize { get; set; } = 1024;
+        /// <summary>
+        /// 客户端连接事件
+        /// </summary>
         public event Action<EndPoint> ClientConnected;
+        /// <summary>
+        /// 接收客户端数据事件
+        /// </summary>
         public event Action<EndPoint, byte[]> ReceiveDataFrom;
+        /// <summary>
+        /// 客户端断开事件
+        /// </summary>
         public event Action<EndPoint> ClientDisconnected;
 
-        public SimpleTcpServer(int port) : this(string.Empty, port) { }
-        public SimpleTcpServer(string localAddress, int port)
+        /// <summary>
+        /// 创建监听指定端口的TCP服务端
+        /// </summary>
+        /// <param name="localPort">本地端口</param>
+        public SimpleTcpServer(int localPort) : this(string.Empty, localPort) { }
+        /// <summary>
+        /// 创建监听指定地址及端口的TCP服务端
+        /// </summary>
+        /// <param name="localAddress">本地地址</param>
+        /// <param name="localPort">本地端口</param>
+        /// <exception cref="FormatException">地址格式问题</exception>
+        /// <exception cref="ArgumentException">非本地地址</exception>
+        /// <exception cref="ArgumentOutOfRangeException">端口超出合理范围</exception>
+        public SimpleTcpServer(string localAddress, int localPort)
         {
             IPAddress addr;
             if (string.IsNullOrEmpty(localAddress))
+            {
                 addr = IPAddress.Any;
+            }
             else
+            {
                 addr = IPAddress.Parse(localAddress);
-            _server = new TcpListener(addr, port);
+                if (!NetHelper.GetLocalIPs().Contains(addr))
+                {
+                    throw new ArgumentException("Not a local address", nameof(localAddress));
+                }
+            }
+            _server = new TcpListener(addr, localPort);
             _server.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
 
             _isRunning = false;
             _connClients = new ConcurrentDictionary<EndPoint, TcpClient>();
         }
 
+        /// <summary>
+        /// 启动监听
+        /// </summary>
+        public void Start()
+        {
+            if (_isRunning)
+                return;
+            //启动监听
+            _server.Start();
+            _isRunning = true;
+            Task.Factory.StartNew(Listen, TaskCreationOptions.LongRunning);
+            Console.WriteLine($"{nameof(SimpleTcpServer)} start at {_server.LocalEndpoint}");
+        }
+        /// <summary>
+        /// 停止监听
+        /// </summary>
+        public void Stop()
+        {
+            if (!_isRunning)
+                return;
+            _server.Stop();
+            _isRunning = false;
+            Console.WriteLine($"{nameof(SimpleTcpServer)} stopped");
+        }
+        /// <summary>
+        /// 向指定客户端发送数据
+        /// </summary>
+        /// <param name="clientEP">客户端</param>
+        /// <param name="data">待发送数据</param>
         public void Send(EndPoint clientEP, byte[] data)
         {
             if (_connClients.TryGetValue(clientEP, out var client))
@@ -44,27 +106,6 @@ namespace Parsifal.Util.Net
                 Console.WriteLine("Unknow client or client had been disconnected");
             }
         }
-
-        public void Start()
-        {
-            if (_isRunning)
-                return;
-            //启动监听
-            _server.Start();
-            _isRunning = true;
-            Task.Factory.StartNew(Listen, TaskCreationOptions.LongRunning);
-            Console.WriteLine($"{nameof(SimpleTcpServer)} start at {_server.LocalEndpoint}");
-        }
-
-        public void Stop()
-        {
-            if (!_isRunning)
-                return;
-            _server.Stop();
-            _isRunning = false;
-            Console.WriteLine($"{nameof(SimpleTcpServer)} stopped");
-        }
-
         public void Dispose()
         {
             InnerDispose();

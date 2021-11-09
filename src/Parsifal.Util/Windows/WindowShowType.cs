@@ -1,4 +1,4 @@
-﻿namespace Parsifal.Util.Window
+﻿namespace Parsifal.Util.Windows
 {
     /// <summary>
     /// window窗口展现类型

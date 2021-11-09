@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Versioning;
-using Parsifal.Util.Window;
+using Parsifal.Util.Windows;
 using Xunit;
 
 namespace Parsifal.Util.UnitTest
@@ -13,10 +13,10 @@ namespace Parsifal.Util.UnitTest
         {
             var app = new AppModuleInfo
             {
-                ProcessName = "notepad++"
+                ProcessName = "notepad"
             };
 
-            var isFind = WindowHelper.FindWindow(app, out _);
+            var isFind = WindowsHelper.FindWindow(app, out _);
             Assert.False(isFind);
         }
 

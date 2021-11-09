@@ -30,7 +30,7 @@ namespace Parsifal.Util
         /// <param name="source">待转换字节数组</param>
         /// <param name="uppercase">是否大写,默认true</param>
         /// <returns>Hex字符串</returns>
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         [Obsolete("Use Convert.ToHexString instead", false)]
 #endif
         public static string BytesToHexString(this byte[] source, bool uppercase = true)
@@ -67,7 +67,7 @@ namespace Parsifal.Util
         /// <returns>对应字节数组</returns>
         /// <exception cref="ArgumentException">字符串为空或长度为奇数</exception>
         /// <exception cref="FormatException">字符串含非十六进制字符</exception>
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         [Obsolete("Use Convert.FromHexString instead", false)]
 #endif
         public static byte[] HexStringToBytes(this string hexString)

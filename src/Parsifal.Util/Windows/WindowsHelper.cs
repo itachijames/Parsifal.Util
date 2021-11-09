@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 
-namespace Parsifal.Util.Window
+namespace Parsifal.Util.Windows
 {
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
 #endif
-    public class WindowHelper
+    public class WindowsHelper
     {
+        #region window
         /// <summary>
         /// 关机
         /// </summary>
@@ -141,5 +143,19 @@ namespace Parsifal.Util.Window
                 return true;
             }
         }
+        #endregion
+
+        #region role and permit
+        /// <summary>
+        /// 当前是否已管理员模式运行
+        /// </summary>
+        public static bool IsRunningAsAdmin()
+        {
+            WindowsIdentity id = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(id);
+
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+        #endregion
     }
 }

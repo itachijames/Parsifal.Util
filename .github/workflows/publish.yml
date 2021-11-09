@@ -15,7 +15,7 @@ jobs:
       - name: setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 6.0.x
 
       - name: publish on version change
         id: publish_nuget

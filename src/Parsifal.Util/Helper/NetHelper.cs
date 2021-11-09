@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -38,11 +39,27 @@ namespace Parsifal.Util
         /// <summary>
         /// 获取本地IPv4地址
         /// </summary>
-        public static IPAddress[] GetLocalIPv4()
+        public static IEnumerable<IPAddress> GetLocalIPv4()
         {
-            string hostName = Dns.GetHostName();
-            var addressList = Dns.GetHostAddresses(hostName);
-            return addressList.Where(p => p.AddressFamily == AddressFamily.InterNetwork).ToArray();
+            return Dns.GetHostAddresses(Dns.GetHostName())
+                .Where(p => p.AddressFamily == AddressFamily.InterNetwork);
+        }
+        /// <summary>
+        /// 获取本地所有可用地址
+        /// </summary>
+        /// <returns>所有网络适配器可用IP地址</returns>
+        public static IEnumerable<IPAddress> GetLocalIPs()
+        {
+            var nis = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(i => i.OperationalStatus == OperationalStatus.Up);
+            foreach (var ni in nis)
+            {
+                var ips = ni.GetIPProperties();
+                foreach (var addI in ips.UnicastAddresses)
+                {
+                    yield return addI.Address;
+                }
+            }
         }
         /// <summary>
         /// 是否为私有地址

@@ -16,7 +16,7 @@ namespace Parsifal.Util.Benchmark
 
         [Params(1000, 1_000_000)]
         public int length;
-        [Params(CrcAlgorithmType.CRC_16_CCITT, CrcAlgorithmType.CRC_32)]
+        [Params(CrcAlgorithmType.CRC_16_CCITT, CrcAlgorithmType.CRC_32, CrcAlgorithmType.CRC_64_JONES)]
         public CrcAlgorithmType type;
 
         [GlobalSetup]

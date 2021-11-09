@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Parsifal.Util.Window
+namespace Parsifal.Util.Windows
 {
     /// <summary>
     /// 枚举窗口

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Parsifal.Util.Window
+namespace Parsifal.Util.Windows
 {
     /// <summary>
     /// WindowApi

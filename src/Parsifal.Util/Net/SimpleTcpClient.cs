@@ -14,20 +14,42 @@ namespace Parsifal.Util.Net
         private readonly IPAddress _remoteAddr;
         private readonly int _remotePort;
 
+        /// <summary>
+        /// 缓存大小
+        /// </summary>
         public int BufferSize { get; set; } = 1024;
+        /// <summary>
+        /// 连接标识
+        /// </summary>
         public bool Connected { get => _isConn; }
+        /// <summary>
+        /// 接收数据事件
+        /// </summary>
         public event Action<byte[]> ReceiveData;
 
-        public SimpleTcpClient(string serverAddress, int port)
+        /// <summary>
+        /// 创建连接到指定服务端的TCP客户端
+        /// </summary>
+        /// <param name="serverAddress">服务器地址</param>
+        /// <param name="serverPort">服务器端口</param>
+        /// <exception cref="ArgumentNullException">地址为空</exception>
+        /// <exception cref="ArgumentOutOfRangeException">地址场地过长或端口超出合理范围</exception>
+        /// <exception cref="SocketException">服务器地址解析异常</exception>
+        public SimpleTcpClient(string serverAddress, int serverPort)
         {
+            if (string.IsNullOrEmpty(serverAddress))
+                throw new ArgumentNullException(nameof(serverAddress));
+            if (serverPort <= IPEndPoint.MinPort || serverPort >= IPEndPoint.MaxPort)
+                throw new ArgumentOutOfRangeException(nameof(serverPort));
             if (!IPAddress.TryParse(serverAddress, out IPAddress addr))
-            {
                 addr = Dns.GetHostEntry(serverAddress).AddressList[0];
-            }
             _remoteAddr = addr;
-            _remotePort = port;
+            _remotePort = serverPort;
         }
 
+        /// <summary>
+        /// 连接到服务器
+        /// </summary>
         public void Connect()
         {
             if (_isConn)
@@ -35,7 +57,9 @@ namespace Parsifal.Util.Net
             _client = new TcpClient();
             Task.Factory.StartNew(ConnectToServer);
         }
-
+        /// <summary>
+        /// 断开服务器连接
+        /// </summary>
         public void Disconnect()
         {
             if (!_isConn)
@@ -43,7 +67,10 @@ namespace Parsifal.Util.Net
             _client.Close();
             _isConn = false;
         }
-
+        /// <summary>
+        /// 发送数据
+        /// </summary>
+        /// <param name="data"></param>
         public void Send(byte[] data)
         {
             if (_isConn)
@@ -55,7 +82,6 @@ namespace Parsifal.Util.Net
                 Console.WriteLine("Not connected to the server");
             }
         }
-
         public void Dispose()
         {
             InnerDispose();
