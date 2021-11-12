@@ -50,12 +50,12 @@ namespace Parsifal.Util.Net
         /// <summary>
         /// 连接到服务器
         /// </summary>
-        public void Connect()
+        public async void Connect()
         {
             if (_isConn)
                 return;
             _client = new TcpClient();
-            Task.Factory.StartNew(ConnectToServer);
+            await Task.Factory.StartNew(ConnectToServer);
         }
         /// <summary>
         /// 断开服务器连接

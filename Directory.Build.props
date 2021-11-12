@@ -5,8 +5,8 @@
 		<Authors>itachijames</Authors>
 		<Company>itachijames</Company>
 		<Copyright>© ITACHIJAMES. All Rights Reserved.</Copyright>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageProjectUrl>https://github.com/itachijames/Parsifal.Util</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/itachijames/Parsifal.Util.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>

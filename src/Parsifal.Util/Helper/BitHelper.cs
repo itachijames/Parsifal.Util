@@ -30,5 +30,33 @@ namespace Parsifal.Util
                 throw new ArgumentOutOfRangeException(nameof(index));
             return (value & (1 << index)) > 0;
         }
+        /// <summary>
+        /// 获取字节从0起连续位的值
+        /// </summary>
+        /// <param name="value">原字节</param>
+        /// <param name="index">（从右向左，从0起）位索引</param>
+        /// <returns></returns>
+        public static byte GetByteValue(byte value, ushort index)
+        {
+            return GetByteValue(value, 0, index);
+        }
+        /// <summary>
+        /// 获取字节连续位的值
+        /// </summary>
+        /// <param name="value">原字节</param>
+        /// <param name="startIndex">开始索引</param>
+        /// <param name="endIndex">结束索引</param>
+        /// <returns>所有指定位组成的新的字节</returns>
+        public static byte GetByteValue(byte value, ushort startIndex, ushort endIndex)
+        {
+            const ushort byteMaxIndex = 7;
+            if (endIndex < startIndex)
+                throw new ArgumentException("结束索引不能小于开始索引");
+            if (startIndex > byteMaxIndex || endIndex > byteMaxIndex)
+                throw new ArgumentOutOfRangeException("索引值异常");
+            var m1 = byteMaxIndex - endIndex;
+            byte temp = (byte)(value << m1);
+            return (byte)(temp >> (m1 + startIndex));
+        }
     }
 }

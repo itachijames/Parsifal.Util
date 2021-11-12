@@ -4,9 +4,10 @@ using Xunit;
 
 namespace Parsifal.Util.UnitTest
 {
-    public class WindowAppTest
+    public class WindowsFuncTest
     {
 #if WINDOWS
+
         [SupportedOSPlatform("windows")]
         [Fact]
         public void FindAppTest()
