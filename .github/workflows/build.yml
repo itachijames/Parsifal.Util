@@ -22,10 +22,10 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build --no-restore -c release
+      run: dotnet build -c release --no-restore
       
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test -c release --no-build --verbosity normal
     # 代码缺陷分析
     - name: Run InferSharp
       uses: microsoft/infersharpaction@v1.2.1
