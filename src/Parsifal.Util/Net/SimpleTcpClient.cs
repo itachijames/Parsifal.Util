@@ -117,7 +117,7 @@ namespace Parsifal.Util.Net
                 await _client.ConnectAsync(_remoteAddr, _remotePort).ConfigureAwait(false);
                 _stream = _client.GetStream();
                 _isConn = true;
-                Console.WriteLine($"Connectd to {_client.Client.RemoteEndPoint}");
+                Console.WriteLine($"Connectd to {_client.Client.RemoteEndPoint} (local:{_client.Client.LocalEndPoint})");
                 _client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
                 _ = Task.Factory.StartNew(DataReceive);
             }

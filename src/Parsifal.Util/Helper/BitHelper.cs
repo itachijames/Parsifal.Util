@@ -49,12 +49,10 @@ namespace Parsifal.Util
         /// <returns>所有指定位组成的新的字节</returns>
         public static byte GetByteValue(byte value, ushort startIndex, ushort endIndex)
         {
-            const ushort byteMaxIndex = 7;
-            if (endIndex < startIndex)
-                throw new ArgumentException("结束索引不能小于开始索引");
-            if (startIndex > byteMaxIndex || endIndex > byteMaxIndex)
-                throw new ArgumentOutOfRangeException("索引值异常");
-            var m1 = byteMaxIndex - endIndex;
+            const ushort ByteMaxIndex = 7;
+            if (startIndex > endIndex || endIndex > ByteMaxIndex || startIndex > ByteMaxIndex)
+                throw new ArgumentOutOfRangeException(nameof(endIndex));
+            var m1 = ByteMaxIndex - endIndex;
             byte temp = (byte)(value << m1);
             return (byte)(temp >> (m1 + startIndex));
         }

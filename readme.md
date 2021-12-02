@@ -2,7 +2,7 @@
 [![BuildStatus](https://github.com/itachijames/Parsifal.Util/workflows/build%20%26%20test/badge.svg)](https://github.com/itachijames/Parsifal.Util/actions/workflows/build.yml?query=event%3Apush) 
 [![NugetPackage](https://img.shields.io/nuget/v/Parsifal.Util.svg)](https://www.nuget.org/packages/Parsifal.Util) 
 
-`Parsifal.Util`是`.Net`平台下的一个实用功能库，提供开发中常用的组件功能。
+`Parsifal.Util`是 *.Net* 平台下的一个实用功能库，提供开发中常用的组件功能。
 
 项目初心是将历往工作中业务无关的常用功能进行良好封装以便复用。本项目对较频繁使用或已有完善实现的功能组件不进行收录，如(反)序列化、加解密等。
 

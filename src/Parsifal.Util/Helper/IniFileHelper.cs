@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Parsifal.Util
 {
-#if NET6_0_OR_GREATER
+#if NET5_0_OR_GREATER
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
 #endif
     public class IniFileHelper

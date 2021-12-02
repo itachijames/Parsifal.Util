@@ -22,7 +22,16 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore -c release
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    # 代码缺陷分析
+    - name: Run InferSharp
+      uses: microsoft/infersharpaction@v1.2.1
+      id: runinfersharp
+      with:
+        binary-path: src/Parsifal.Util/bin/Release/net6.0
+    # 分析结果输出
+    - name: InferSharp analysis results
+      run: echo "${{ steps.runinfersharp.outputs.results }}"
