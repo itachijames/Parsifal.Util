@@ -6,20 +6,16 @@
 
 项目初心是将历往工作中业务无关的常用功能进行良好封装以便复用。本项目对较频繁使用或已有完善实现的功能组件不进行收录，如(反)序列化、加解密等。
 
-
 ## 支持
-- `.Net 6.0+`
+- `.Net 6.0`+
 - `.Net Standard 2.1`
-- `.Net Framework 4.5+`
-
+- `.Net Framework 4.8`+
 
 ## 功能
-- CRC校验
+- CRC
 - 字符串操作
 - 网络助手
-- Windows操作
 - ...
-
 
 ## 使用
 ### CRC
@@ -50,15 +46,4 @@ var client = new SimpleTcpClient("192.168.57.57", 12345);
 client.Connect();
 Thread.Sleep(1000);
 client.Send(Encoding.UTF8.GetBytes("hello"));
-```
-### win窗口
-``` C#
-var app = new AppModuleInfo
-{
-    ProcessName = "notepad++"
-};
-if (WindowHelper.FindWindow(app, out var hwnd))
-{
-    WindowHelper.ShowWindow(hwnd, WindowShowType.SW_SHOWMAXIMIZED);
-}
 ```

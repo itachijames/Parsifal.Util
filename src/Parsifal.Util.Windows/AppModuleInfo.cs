@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Parsifal.Util.Windows
+﻿namespace Parsifal.Util.Windows
 {
     public class AppModuleInfo
     {

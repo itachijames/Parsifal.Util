@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Parsifal.Util.Windows
@@ -26,6 +25,7 @@ namespace Parsifal.Util.Windows
         [DllImport(User32Dll, CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, ref AppModuleInfo appModule);
+
         /// <summary>
         /// 获取窗口类名
         /// </summary>
@@ -35,6 +35,7 @@ namespace Parsifal.Util.Windows
         /// <returns>字符数</returns>
         [DllImport(User32Dll, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
         /// <summary>
         /// 获取父窗口
         /// </summary>
@@ -42,6 +43,7 @@ namespace Parsifal.Util.Windows
         /// <returns></returns>
         [DllImport(User32Dll, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern IntPtr GetParent(IntPtr hWnd);
+
         /// <summary>
         /// 获取窗口名
         /// </summary>
@@ -51,6 +53,7 @@ namespace Parsifal.Util.Windows
         /// <returns>字符数</returns>
         [DllImport(User32Dll, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
         /// <summary>
         /// 获取窗口进程ID
         /// </summary>
@@ -59,6 +62,7 @@ namespace Parsifal.Util.Windows
         /// <returns>创建窗口的线程ID</returns>
         [DllImport(User32Dll, SetLastError = true)]
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
         /// <summary>
         /// 是否为窗口
         /// </summary>
@@ -67,6 +71,7 @@ namespace Parsifal.Util.Windows
         [DllImport(User32Dll)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindow(IntPtr hWnd);
+
         /// <summary>
         /// 将创建指定窗口的线程置于前台并激活该窗口
         /// </summary>
@@ -75,6 +80,7 @@ namespace Parsifal.Util.Windows
         [DllImport(User32Dll)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
+
         /// <summary>
         /// 显示窗口
         /// </summary>

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Security.Principal;
 using System.Text;
 
 namespace Parsifal.Util.Windows
 {
-#if NET6_0_OR_GREATER
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-#endif
     public class WindowsHelper
     {
         #region window
         /// <summary>
-        /// 关机
+        /// 系统关机
         /// </summary>
         public static void Shutdown()
         {
@@ -25,7 +21,7 @@ namespace Parsifal.Util.Windows
             Process.Start(psi);
         }
         /// <summary>
-        /// 重启
+        /// 系统重启
         /// </summary>
         public static void Restart()
         {
@@ -152,7 +148,7 @@ namespace Parsifal.Util.Windows
         public static bool IsRunningAsAdmin()
         {
             WindowsIdentity id = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(id);
+            WindowsPrincipal principal = new(id);
 
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }

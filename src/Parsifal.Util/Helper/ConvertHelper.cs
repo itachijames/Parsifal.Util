@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Parsifal.Util
 {
@@ -12,7 +15,7 @@ namespace Parsifal.Util
         /// <param name="source">待转换字节数组</param>
         /// <param name="uppercase">是否大写,默认true</param>
         /// <returns>Hex字符串</returns>
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         [Obsolete("Use System.Convert.ToHexString instead", false)]
 #endif
         public static string BytesToHexString(byte[] source, bool uppercase = true)
@@ -49,7 +52,7 @@ namespace Parsifal.Util
         /// <returns>对应字节数组</returns>
         /// <exception cref="ArgumentException">字符串为空或长度为奇数</exception>
         /// <exception cref="FormatException">字符串含非十六进制字符</exception>
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         [Obsolete("Use System.Convert.FromHexString instead", false)]
 #endif
         public static byte[] HexStringToBytes(string hexString)
@@ -84,6 +87,38 @@ namespace Parsifal.Util
                 sb.Append(Convert.ToChar(Convert.ToUInt32(hexString.Substring(i * 2, 2), 16)));
             }
             return sb.ToString();
+        }
+        /// <summary>
+        /// 图片转base64
+        /// </summary>
+        /// <param name="image">图片</param>
+        /// <returns>图片base64信息</returns>
+#if NET6_0_OR_GREATER
+        [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+#endif
+        public static string ToBase64String(Image image)
+        {
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, ImageFormat.Png);
+                return Convert.ToBase64String(ms.ToArray());
+            }
+        }
+        /// <summary>
+        /// base64转图片
+        /// </summary>
+        /// <param name="base64String">base64信息</param>
+        /// <returns>图片</returns>
+#if NET6_0_OR_GREATER
+        [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+#endif
+        public static Image ToImageFromBase64(string base64String)
+        {
+            var bs = Convert.FromBase64String(base64String);
+            using (var ms = new MemoryStream(bs))
+            {
+                return Image.FromStream(ms);
+            }
         }
     }
 }
