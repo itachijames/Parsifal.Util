@@ -11,13 +11,19 @@ namespace Parsifal.Util.Net
     public class SimpleTcpServer : IDisposable
     {
         private volatile bool _isRunning;
-        private readonly TcpListener _server;
+        private TcpListener _server;
+        private IPAddress _localAddress;
+        private int _localPort;
         private readonly ConcurrentDictionary<EndPoint, TcpClient> _connClients;
 
         /// <summary>
         /// 缓存大小
         /// </summary>
         public int BufferSize { get; set; } = 1024;
+        /// <summary>
+        /// 运行标志
+        /// </summary>
+        public bool Running => _isRunning;
         /// <summary>
         /// 客户端连接事件
         /// </summary>
@@ -59,11 +65,10 @@ namespace Parsifal.Util.Net
                     throw new ArgumentException("Not a local address", nameof(localAddress));
                 }
             }
-            _server = new TcpListener(addr, localPort);
-            _server.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
-
-            _isRunning = false;
+            _localAddress = addr;
+            _localPort = localPort;
             _connClients = new ConcurrentDictionary<EndPoint, TcpClient>();
+            _isRunning = false;
         }
 
         /// <summary>
@@ -73,6 +78,8 @@ namespace Parsifal.Util.Net
         {
             if (_isRunning)
                 return;
+            _server = new TcpListener(_localAddress, _localPort);
+            _server.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
             //启动监听
             _server.Start();
             _isRunning = true;
@@ -97,13 +104,20 @@ namespace Parsifal.Util.Net
         /// <param name="data">待发送数据</param>
         public void Send(EndPoint clientEP, byte[] data)
         {
-            if (_connClients.TryGetValue(clientEP, out var client))
+            if (_isRunning)
             {
-                client.GetStream().Write(data, 0, data.Length);
+                if (_connClients.TryGetValue(clientEP, out var client))
+                {
+                    client.GetStream().Write(data, 0, data.Length);
+                }
+                else
+                {
+                    Console.WriteLine("Unknow client or client had been disconnected");
+                }
             }
             else
             {
-                Console.WriteLine("Unknow client or client had been disconnected");
+                Console.WriteLine("Not running yet");
             }
         }
         public void Dispose()
@@ -162,9 +176,14 @@ namespace Parsifal.Util.Net
         private async Task DataReceive(TcpClient client)
         {
             var ep = client.Client.LocalEndPoint;
+#if NET45_OR_GREATER
+            var buffer = new byte[BufferSize];
+#else
+            var ap = System.Buffers.ArrayPool<byte>.Shared;
+            var buffer = ap.Rent(BufferSize);
+#endif
             while (client.Connected)
             {
-                var buffer = new byte[BufferSize];
                 try
                 {
                     int count = await (client.GetStream()?.ReadAsync(buffer, 0, buffer.Length)).ConfigureAwait(false);
@@ -181,6 +200,9 @@ namespace Parsifal.Util.Net
                 catch (Exception ex)
                 {
                     Console.WriteLine($"An exception occurred on receiving: {ex.GetBriefMessage()}");
+#if !NET45_OR_GREATER
+                    ap.Return(buffer);
+#endif
                 }
             }
             //如果到此处则表示连接已断开

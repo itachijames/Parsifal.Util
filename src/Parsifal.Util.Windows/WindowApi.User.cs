@@ -14,7 +14,7 @@ namespace Parsifal.Util.Windows
 
     internal partial class WindowApi
     {// Windows用户界面接口
-        private const string User32Dll = "User32.dll";
+        private const string USER_32_DLL = "User32.dll";
 
         /// <summary>
         /// 枚举窗口
@@ -22,7 +22,7 @@ namespace Parsifal.Util.Windows
         /// <param name="lpEnumFunc">窗口枚举回调</param>
         /// <param name="appModule">应用</param>
         /// <returns></returns>
-        [DllImport(User32Dll, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(USER_32_DLL, CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, ref AppModuleInfo appModule);
 
@@ -33,7 +33,7 @@ namespace Parsifal.Util.Windows
         /// <param name="lpClassName">缓存</param>
         /// <param name="nMaxCount">缓存大小</param>
         /// <returns>字符数</returns>
-        [DllImport(User32Dll, CharSet = CharSet.Unicode, SetLastError = true)]
+        [DllImport(USER_32_DLL, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Parsifal.Util.Windows
         /// </summary>
         /// <param name="hWnd">窗口句柄</param>
         /// <returns></returns>
-        [DllImport(User32Dll, ExactSpelling = true, CharSet = CharSet.Auto)]
+        [DllImport(USER_32_DLL, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern IntPtr GetParent(IntPtr hWnd);
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Parsifal.Util.Windows
         /// <param name="lpString">缓存</param>
         /// <param name="nMaxCount">缓存大小</param>
         /// <returns>字符数</returns>
-        [DllImport(User32Dll, CharSet = CharSet.Unicode, SetLastError = true)]
+        [DllImport(USER_32_DLL, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Parsifal.Util.Windows
         /// <param name="hWnd">窗口句柄</param>
         /// <param name="lpdwProcessId">进程ID</param>
         /// <returns>创建窗口的线程ID</returns>
-        [DllImport(User32Dll, SetLastError = true)]
+        [DllImport(USER_32_DLL, SetLastError = true)]
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Parsifal.Util.Windows
         /// </summary>
         /// <param name="hWnd">句柄</param>
         /// <returns></returns>
-        [DllImport(User32Dll)]
+        [DllImport(USER_32_DLL)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindow(IntPtr hWnd);
 
@@ -77,7 +77,7 @@ namespace Parsifal.Util.Windows
         /// </summary>
         /// <param name="hWnd">窗口句柄</param>
         /// <returns>成功置于前台返回true;否则false</returns>
-        [DllImport(User32Dll)]
+        [DllImport(USER_32_DLL)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
@@ -87,7 +87,7 @@ namespace Parsifal.Util.Windows
         /// <param name="hWnd">窗口句柄</param>
         /// <param name="nCmdShow">显示命令</param>
         /// <returns>操作成功返回true;否则false</returns>
-        [DllImport(User32Dll)]
+        [DllImport(USER_32_DLL)]
         public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
     }
 }

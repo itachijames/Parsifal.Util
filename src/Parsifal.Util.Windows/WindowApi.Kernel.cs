@@ -7,7 +7,7 @@ namespace Parsifal.Util.Windows
     /// </summary>
     internal partial class WindowApi
     {// 内存、IO、中断等系统内核功能接口
-        private const string Kernel32Dll = "Kernel32.dll";
+        private const string KERNEL_32_DLL = "Kernel32.dll";
 
         /// <summary>
         /// 标准输入设备
@@ -28,7 +28,7 @@ namespace Parsifal.Util.Windows
         /// Sets the last-error code for the calling thread.
         /// </summary>
         /// <param name="dwErrorCode">The last-error code for the thread.</param>
-        [DllImport(Kernel32Dll, SetLastError = true)]
+        [DllImport(KERNEL_32_DLL, SetLastError = true)]
         public static extern void SetLastError(uint dwErrorCode);
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Parsifal.Util.Windows
         /// <remarks>You should never PInvoke to GetLastError. Call <see cref="Marshal.GetLastWin32Error"/> instead!</remarks>
         /// <returns>calling thread's last-error code</returns>
         [Obsolete("Call Marshal.GetLastWin32Error instead", true)]
-        [DllImport(Kernel32Dll)]
+        [DllImport(KERNEL_32_DLL)]
         public static extern uint GetLastError();
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Parsifal.Util.Windows
         /// </summary>
         /// <param name="nStdHandle">标准设备</param>
         /// <returns>标准设备句柄</returns>
-        [DllImport(Kernel32Dll)]
+        [DllImport(KERNEL_32_DLL)]
         public static extern IntPtr GetStdHandle(int nStdHandle);
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Parsifal.Util.Windows
         /// <param name="hConsoleHandle">输入缓冲区或屏幕缓冲区的句柄</param>
         /// <param name="lpMOde">当前模式</param>
         /// <returns>成功返回true;否则false</returns>
-        [DllImport(Kernel32Dll)]
+        [DllImport(KERNEL_32_DLL)]
         public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMOde);
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Parsifal.Util.Windows
         /// <param name="hConsoleHandle">输入缓冲区或屏幕缓冲区的句柄</param>
         /// <param name="dwMode">要设置的输入或输出模式</param>
         /// <returns>成功返回true;否则false</returns>
-        [DllImport(Kernel32Dll)]
+        [DllImport(KERNEL_32_DLL)]
         public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
     }
 

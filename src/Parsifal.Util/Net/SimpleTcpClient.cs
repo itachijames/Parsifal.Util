@@ -21,7 +21,7 @@ namespace Parsifal.Util.Net
         /// <summary>
         /// 连接标识
         /// </summary>
-        public bool Connected { get => _isConn; }
+        public bool Connected => _isConn;
         /// <summary>
         /// 接收数据事件
         /// </summary>
@@ -64,7 +64,8 @@ namespace Parsifal.Util.Net
         {
             if (!_isConn)
                 return;
-            _client.Close();
+            _client?.Close();
+            _stream?.Close();
             _isConn = false;
         }
         /// <summary>
@@ -90,9 +91,9 @@ namespace Parsifal.Util.Net
 
         private void InnerDispose()
         {
+            _isConn = false;
             try
             {
-                _isConn = false;
                 if (_stream != null)
                 {
                     _stream.Close();
@@ -116,10 +117,10 @@ namespace Parsifal.Util.Net
             {
                 await _client.ConnectAsync(_remoteAddr, _remotePort).ConfigureAwait(false);
                 _stream = _client.GetStream();
-                _isConn = true;
                 Console.WriteLine($"Connectd to {_client.Client.RemoteEndPoint} (local:{_client.Client.LocalEndPoint})");
                 _client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
                 _ = Task.Factory.StartNew(DataReceive);
+                _isConn = true;
             }
             catch (Exception ex)
             {
@@ -130,11 +131,16 @@ namespace Parsifal.Util.Net
 
         private async Task DataReceive()
         {
+#if NET45_OR_GREATER
+            var buffer = new byte[BufferSize];
+#else
+            var ap = System.Buffers.ArrayPool<byte>.Shared;
+            var buffer = ap.Rent(BufferSize);
+#endif
             try
             {
-                while (true)
+                while (_isConn)
                 {
-                    var buffer = new byte[BufferSize];
                     int count = await (_stream?.ReadAsync(buffer, 0, buffer.Length)).ConfigureAwait(false);
                     if (count > 0)
                     {
@@ -150,6 +156,9 @@ namespace Parsifal.Util.Net
             catch (Exception ex)
             {
                 Console.WriteLine($"An exception occurred on receiving: {ex.GetBriefMessage()}");
+#if !NET45_OR_GREATER
+                ap.Return(buffer);
+#endif
             }
             //运行到此处则表示已断开连接
             _isConn = false;

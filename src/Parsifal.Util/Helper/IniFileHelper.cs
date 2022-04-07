@@ -8,11 +8,11 @@ namespace Parsifal.Util
 #endif
     public class IniFileHelper
     {
-        private const string _winDllName = "kernel32.dll";
+        private const string WIN_DLL_NAME = "kernel32.dll";
 
-        [DllImport(_winDllName, CharSet = CharSet.Unicode)]
+        [DllImport(WIN_DLL_NAME, CharSet = CharSet.Unicode)]
         static extern uint GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, uint nSize, string lpFileName);
-        [DllImport(_winDllName, CharSet = CharSet.Unicode, SetLastError = true)]
+        [DllImport(WIN_DLL_NAME, CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool WritePrivateProfileString(string lpAppName, string lpKeyName, string lpString, string lpFileName);
 

@@ -15,10 +15,10 @@ namespace Parsifal.Util
             var sb = new StringBuilder();
             if (exception != null)
             {
-                sb.Append(exception.Message);
+                sb.AppendLine(exception.Message);
                 if (exception.InnerException != null)
                 {
-                    sb.Append($": {GetBriefMessage(exception.InnerException)}");
+                    sb.Append(GetBriefMessage(exception.InnerException));
                 }
             }
             return sb.ToString();
