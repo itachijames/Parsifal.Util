@@ -1,4 +1,4 @@
-name: publish to nuget
+name: publish
 
 on:
   push:
@@ -19,10 +19,16 @@ jobs:
 
       - name: publish on version change
         id: publish_nuget
-        uses: rohith/publish-nuget@v2
+        uses: brandedoutcast/publish-nuget@v2
         with:
           # Filepath of the project to be packaged, relative to root of repository
           PROJECT_FILE_PATH: src/Parsifal.Util/Parsifal.Util.csproj
+          
+          # Configuration to build and package
+          BUILD_CONFIGURATION: Release
+          
+          # Platform target to compile (default is empty/AnyCPU)
+          # BUILD_PLATFORM: x64
           
           # NuGet package id, used for version detection & defaults to project name
           PACKAGE_NAME: Parsifal.Util

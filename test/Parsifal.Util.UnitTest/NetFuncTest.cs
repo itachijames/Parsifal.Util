@@ -20,7 +20,7 @@ namespace Parsifal.Util.UnitTest
 
             var client = new SimpleTcpClient(curAddrStr, srvPort);
             client.Connect();
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
 
             Assert.True(client.Connected);
 

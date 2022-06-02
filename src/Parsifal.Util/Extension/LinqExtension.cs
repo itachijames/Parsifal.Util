@@ -33,15 +33,16 @@ namespace Parsifal.Util
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="input"></param>
+        /// <param name="separator">分隔符</param>
         /// <returns></returns>
-        public static string CollectionToString<T>(this IEnumerable<T> input)
+        public static string CollectionToString<T>(this IEnumerable<T> input, char separator = ',')
         {
             if (input == null)
                 return string.Empty;
             var sb = new StringBuilder();
             foreach (var item in input)
             {
-                sb.Append(item).Append(',');
+                sb.Append(item).Append(separator);
             }
             sb = sb.Remove(sb.Length - 1, 1);//移除最后一个分隔
             return sb.ToString();
